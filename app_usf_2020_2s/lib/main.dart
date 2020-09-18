@@ -1,43 +1,66 @@
 import 'package:app_usf_2020_2s/commom/appColors.dart';
+import 'package:app_usf_2020_2s/fadeAnimation.dart';
+import 'package:app_usf_2020_2s/primeiraPagina.dart';
+import 'package:app_usf_2020_2s/rotationAnimation.dart';
+import 'package:app_usf_2020_2s/segundaPagina.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    routes: {
+      PrimeiraPagina.routeName: (context) => PrimeiraPagina(),
+      SegundaPagina.routeName: (context) => SegundaPagina(),
+      FadeAnimation.routeName: (context) => FadeAnimation(),
+      RotationAnimation.routeName: (context) => RotationAnimation()
+    },
+    home: build(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: AppColors.bottons,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+build() {
+  return SafeArea(
+    child: Scaffold(
+      appBar: AppBar(
+        title: Text("Página de Transação"),
       ),
-      home: MyHomePage(title: 'José Matias Lemes Filho'),
-    );
-  }
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).pushNamed(animationTypeList[index]);
+                },
+                leading: CircleAvatar(
+                  backgroundColor: AppColors.backgndAvatar,
+                  child: Text("${index + 1}"),
+                ),
+                title: Text(animationTypeList[index].toString()),
+              ),
+            ),
+          );
+        },
+        itemCount: animationTypeList.length,
+      ),
+    ),
+  );
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+var animationTypeList = [
+  PrimeiraPagina.routeName,
+  SegundaPagina.routeName,
+  FadeAnimation.routeName,
+  RotationAnimation.routeName,
+];
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  List<String> litems = [];
-  final TextEditingController dados = TextEditingController();
-
-  @override
+class ReturnPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: AppBar(),
+      body: Center(
+        child: Text('Yoooooooooo !'),
       ),
-      body: Container(),
     );
   }
 }
